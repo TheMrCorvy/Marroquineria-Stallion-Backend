@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 
 use DB;
 
+use Hash; 
 class UserSeeder extends Seeder
 {
     /**
@@ -18,12 +19,12 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Gonzalo Salvador Corvalán',
             'email' => 'mr.corvy@gmail.com',
-            'password' => 'admin',
+            'password' => Hash::make('admin'),
         ]);
         DB::table('users')->insert([
             'name' => 'Mercedes del Valle Aguirre',
             'email' => 'mercedesdelvalleaguirre@gmail.com',
-            'password' => 'admin',
+            'password' => Hash::make('admin'),
         ]);
     }
 }

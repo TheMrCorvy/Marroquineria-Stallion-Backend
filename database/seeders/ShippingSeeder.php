@@ -19,7 +19,7 @@ class ShippingSeeder extends Seeder
             'method' => 'Lo retiraré en el local'
         ]);
         DB::table('shipping_methods')->insert([
-            'method' => 'moto mensajera'
+            'method' => 'Moto Mensajera'
         ]);
 
         DB::table('shipping_zones')->insert([

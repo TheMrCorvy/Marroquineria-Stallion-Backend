@@ -9,5 +9,8 @@ use App\Models\ShippingZone;
 
 class ShippingController extends Controller
 {
-    //
+    public function get_shipping_options()
+    {
+        //
+    }
 }

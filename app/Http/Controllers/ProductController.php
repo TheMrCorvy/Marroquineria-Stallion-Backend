@@ -16,4 +16,23 @@ class ProductController extends Controller
             'products' => $products,
         ], 200);
     }
+
+    public function find_product($product_id)
+    {
+        $product = Product::with('images')->findOrFail();
+
+        return response()->json([
+            'product' => $product,
+        ], 200);
+    }
+
+    public function search_products(Request $request)
+    {
+        //
+    }
+
+    public function get_offers()
+    {
+        // 
+    }
 }

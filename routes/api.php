@@ -9,7 +9,7 @@ Route::get('/find-product', 'ProductController@find_product');
 
 Route::get('/get-offers', 'ProductController@get_offers');
 
-Route::post('/search-product', 'ProductController@search_product');
+Route::post('/search-products', 'ProductController@search_products');
 
 Route::post('/buy', 'SaleController@buy');
 

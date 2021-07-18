@@ -18,9 +18,10 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->integer('price');
+            $table->integer('discount')->nullable();
             $table->integer('stock');
             $table->string('brand');
-            $table->string('type'); // 'mochila', 'valija', 'bolso', etc
+            $table->string('type'); // 'mochilas', 'valijas', 'bolsos', etc
             $table->timestamps();
         });
     }

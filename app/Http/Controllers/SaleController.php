@@ -23,16 +23,17 @@ class SaleController extends Controller
     {
         $info = $request->only('name', 'email', 'phone', 'mail_body');
 
-        $validator = Validator::make($info,
-        [
-            'name' => ['required', 'string', 'min:2', 'max:100'],
-            'phone' => ['required', 'string', 'min:6', 'max:12'],
-            'email' => ['required', 'email', 'min:5', 'max:100'],
-            'mail_body' => ['required', 'string', 'min:5', 'max:190'],
-        ]);
+        $validator = Validator::make(
+            $info,
+            [
+                'name' => ['required', 'string', 'min:2', 'max:100'],
+                'phone' => ['required', 'string', 'min:6', 'max:12'],
+                'email' => ['required', 'email', 'min:5', 'max:100'],
+                'mail_body' => ['required', 'string', 'min:5', 'max:190'],
+            ]
+        );
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors()
             ], 400);

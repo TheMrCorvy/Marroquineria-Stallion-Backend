@@ -27,7 +27,7 @@ class SaleController extends Controller
             $info,
             [
                 'name' => ['required', 'string', 'min:2', 'max:100'],
-                'phone' => ['required', 'string', 'min:6', 'max:12'],
+                'phone' => ['required', 'string', 'min:6', 'max:16'],
                 'email' => ['required', 'email', 'min:5', 'max:100'],
                 'mail_body' => ['required', 'string', 'min:5', 'max:190'],
             ]
@@ -35,7 +35,7 @@ class SaleController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
             ], 400);
         }
 
@@ -49,7 +49,7 @@ class SaleController extends Controller
         ));
 
         return response()->json([
-            'message' => 'Tu consulta fue enviada con éxito.'
+            'message' => 'Tu consulta fue enviada con éxito.',
         ], 200);
     }
 }

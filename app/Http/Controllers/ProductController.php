@@ -12,9 +12,7 @@ class ProductController extends Controller
 {
     public function get_products()
     {
-        $products = cache()->remember('products', 60 * 60 * 24 * 10, function () {
-            return Product::with('images')->paginate(10);
-        });
+        $products = Product::with('images')->paginate(10);
 
         return response()->json([
             'products' => $products,

@@ -28,7 +28,7 @@ class AdminController extends Controller
         if ($logged_in) {
             request()->session()->regenerate();
 
-            return redirect()->route('dashboard');
+            return redirect()->route('home');
         }
 
         return view('errors.500');

@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand"> 
                         <a href="{{route('home')}}">
-                            Dashboard
+                            Panel de Control
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -22,9 +22,9 @@
             </div>
             
             <ul class="navbar-nav ml-lg-auto">
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{route('statistics')}}" class="nav-link">Statistics</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a 
                         class="nav-link nav-link-icon" 
@@ -36,7 +36,7 @@
                         data-animation="true"
                     >
                         <i class="ni ni-lock-circle-open"></i>
-                        <span class="nav-link-inner--text d-lg-none">Logout</span>
+                        <span class="nav-link-inner--text d-lg-none">Cerrar Sesión</span>
                     </a>
                 </li>
             </ul>

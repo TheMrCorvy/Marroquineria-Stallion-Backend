@@ -17,7 +17,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                     </div>
-                                    <input class="form-control" name="email" placeholder="Email" type="number" value="{{old('email')}}">
+                                    <input class="form-control" name="email" placeholder="Email" type="email" value="{{old('email')}}">
                                 </div>
                                 @error('email')
                                     <small class="text-danger">

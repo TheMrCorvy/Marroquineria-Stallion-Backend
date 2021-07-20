@@ -15,6 +15,8 @@ class ShippingMethod extends Model
 
     protected $guarded = [];
 
+    protected $visible = ['id', 'method', 'shipping_zones'];
+
     public function shipping_zones()
     {
         return $this->hasMany(ShippingZone::class);

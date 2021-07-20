@@ -15,7 +15,7 @@ class Image extends Model
 
     protected $guarded = [];
 
-    protected $visible = ['img_url', 'img_path'];
+    protected $visible = ['img_url'];
 
     public function product()
     {

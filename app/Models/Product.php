@@ -15,7 +15,7 @@ class Product extends Model
 
     protected $guarded = [];
 
-    public $incrementing = false;
+    protected $visible = ['title', 'id', 'description', 'price', 'stock', 'brand', 'type', 'images'];
 
     public function images()
     {

@@ -52,7 +52,7 @@
                                     Solo los administradores del sitio pueden entrar aquí.
                                 </p>
                                 <a href="https://stallionmarroquineria.com">
-                                    <button type="button" class="btn btn-outline-info">Ir a Stallion Marroquinería</button>
+                                    <button type="button" class="btn btn-outline-info">Volver a Stallion Marroquinería</button>
                                 </a>
 
                                 @if (Session::has('error'))
@@ -67,49 +67,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const emailButton = document.getElementById('send-code')
-
-        window.addEventListener('load', () => 
-        {
-            emailButton.addEventListener('click', e => 
-            {
-                e.preventDefault()
-
-                sendCodeByEmail()
-            })
-        })
-
-        async function sendCodeByEmail()
-        {
-            emailButton.innerHTML = `
-                <div class="spinner-border" role="status" style="width: 1rem; height: 1rem;">
-                    <span class="sr-only">Loading...</span>
-                </div>
-            `
-
-            emailButton.setAttribute('disabled', '')
-
-            await fetch("/api/send-code-by-email", {
-                method: 'POST',
-                headers: new Headers({
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Accept-Language': 'es',
-                }),
-                body: JSON.stringify({
-                    email: "mr.corvy@gmail.com",
-                    isSecondary: false
-                })
-            })
-            .then(res => res.json())
-            .then(response => {
-                console.log(response)
-
-                emailButton.innerHTML = 'Send Code'
-            })
-            .catch(response => console.error(response))
-        }
-    </script>
 @endsection

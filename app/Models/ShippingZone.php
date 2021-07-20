@@ -15,6 +15,8 @@ class ShippingZone extends Model
 
     protected $guarded = [];
 
+    protected $visible = ['region', 'id', 'delay', 'price'];
+
     public function shipping_methods()
     {
         return $this->belongsTo(ShippingMethod::class);

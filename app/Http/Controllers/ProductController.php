@@ -101,7 +101,7 @@ class ProductController extends Controller
             $images = $request->file('images');
 
             foreach ($images as $image) {
-                $path = $image->store('logos', 's3');
+                $path = $image->store('images', 's3');
 
                 Storage::disk('s3')->setVisibility($path, 'public');
 
@@ -112,8 +112,7 @@ class ProductController extends Controller
                 ]);
             }
         } catch (\Throwable $th) {
-            // return view('errors.500');
-            dd($th);
+            return view('errors.500');
         }
 
         return redirect()->route('home')->withMessage('El producto fue añadido exitosamente.');
@@ -132,6 +131,14 @@ class ProductController extends Controller
 
     public function delete($product_id)
     {
+        $images = Image::select('img_url', 'img_path', 'id')->where('product_id', $product_id)->get();
+
+        foreach ($images as $image) {
+            Storage::disk('s3')->delete('images/' . $image->img_path);
+
+            $image->delete();
+        }
+
         $product = Product::findOrFail($product_id);
 
         $product->delete();

@@ -28,7 +28,7 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function search_products(Request $request)
+    public function search_products(Request $request, $no_pagination = null)
     {
         $validator = Validator::make(
             $request->only('query'),
@@ -39,18 +39,29 @@ class ProductController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'errors' => $validator->errors()
+                'errors' => $validator->errors(),
+                'request' => $request->all()
             ], 400);
         }
 
         $query = $request['query'];
 
-        $products = Product::with('images')
-            ->where('title', 'LIKE', "%$query%")
-            ->orWhere('description', 'LIKE', "%$query%")
-            ->orWhere('brand', 'LIKE', "%$query%")
-            ->orWhere('type', 'LIKE', "%$query%")
-            ->paginate(10);
+        if ($no_pagination) {
+            $products = Product::with('images')
+                ->where('title', 'LIKE', "%$query%")
+                ->orWhere('description', 'LIKE', "%$query%")
+                ->orWhere('brand', 'LIKE', "%$query%")
+                ->orWhere('type', 'LIKE', "%$query%")
+                ->get();
+        } else {
+            $products = Product::with('images')
+                ->where('title', 'LIKE', "%$query%")
+                ->orWhere('description', 'LIKE', "%$query%")
+                ->orWhere('brand', 'LIKE', "%$query%")
+                ->orWhere('type', 'LIKE', "%$query%")
+                ->paginate(10);
+        }
+
 
         return response()->json([
             'products' => $products,

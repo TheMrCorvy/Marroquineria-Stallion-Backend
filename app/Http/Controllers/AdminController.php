@@ -13,7 +13,7 @@ class AdminController extends Controller
     public function login(Request $request)
     {
         $data = $request->validate([
-            'email' => ['email', 'required', 'min:4', 'max:50'],
+            'email' => ['email', 'required', 'min:4', 'max:50', 'exists:users,email'],
             'password' => ['required', 'string', 'min:4', 'max:10', 'alpha']
         ]);
 

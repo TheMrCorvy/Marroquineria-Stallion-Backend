@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-default py-0 fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{{route('home')}}">Dashboard</a>
+        <a class="navbar-brand" href="{{route('home')}}">Panel De Control</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,21 +22,18 @@
             </div>
             
             <ul class="navbar-nav ml-lg-auto">
-                {{-- <li class="nav-item">
-                    <a href="{{route('statistics')}}" class="nav-link">Statistics</a>
-                </li> --}}
                 <li class="nav-item">
                     <a 
                         class="nav-link nav-link-icon" 
                         href="{{route('logout')}}" 
                         data-toggle="tooltip" 
                         data-placement="bottom" 
-                        title="Logout" 
+                        title="Cerrar Sesión" 
                         data-container="body" 
                         data-animation="true"
                     >
                         <i class="ni ni-lock-circle-open"></i>
-                        <span class="nav-link-inner--text d-lg-none">Cerrar Sesión</span>
+                        <span class="nav-link-inner--text">Cerrar Sesión</span>
                     </a>
                 </li>
             </ul>

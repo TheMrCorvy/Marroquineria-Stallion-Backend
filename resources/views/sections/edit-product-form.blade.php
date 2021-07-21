@@ -1,4 +1,4 @@
-<form class="row justify-content-around" action="{{route('product.update', $product->id)}}">
+<form class="row justify-content-around" method="POST" action="{{route('product.update', $product->id)}}">
 	@csrf
 	<div class="col-md-4">
 		<div class="form-group">
@@ -67,7 +67,7 @@
 		<div class="form-group">
 			<label>Descuento por Oferta:</label>
 			<select class="form-control" name="sale">
-				<option value="{{$product->sale}}">{{$product->sale ? $product->sale : 0}}%</option>
+				<option value="{{$product->discount}}">{{$product->discount ? $product->discount : 0}}%</option>
 				<option value="0">0%</option>
 				<option value="1">1%</option>
 				<option value="2">2%</option>
@@ -116,9 +116,18 @@
 	<div class="col-md-4">
 		<label class="form-control-label">Imagenes (opcional):</label>
 		<div class="custom-file">
-			<input required type="file" class="form-control" name="images[]" placeholder="address" multiple>
+			<input type="file" class="form-control" name="images[]" placeholder="address" multiple>
 		</div>
 		<small class="text-danger">Las imágenes subidas reemplazarán a las que actualmente están online</small>
+		@error('images')
+			<small class="text-danger"> {{$message}} </small>
+		@enderror
+		@error('images.*')
+			<small class="text-danger"> {{$message}} </small>
+		@enderror
+		@error('images[]')
+			<small class="text-danger"> {{$message}} </small>
+		@enderror
 	</div>
 	<div class="col-md-12 text-center mt-4">
 		<input type="submit" value="Guardar Cambios" class="btn btn-success">

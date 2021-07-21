@@ -85,16 +85,18 @@ class ProductController extends Controller
             'stock' =>          ['required', 'integer', 'min:1'],
             'brand' =>          ['required', 'string', 'min:1', 'max:190'],
             'type' =>           ['required', 'string', 'min:2', 'max:190'],
-            'images.*' =>       ['nullable', 'mimes:jpg,jpeg,peng', 'max:20000']
+            'sale' =>           ['nullable', 'integer', 'min:0'],
+            'images.*' =>       ['required', 'mimes:jpg,jpeg,png', 'max:20000']
         ]);
 
         try {
             $product_created = Product::create([
                 'title' => $new_product['title'],
-                'description' => $new_product['description'],
+                'description' => $new_product['description'] ? $new_product['description'] : ' ',
                 'price' => $new_product['price'],
                 'stock' => $new_product['stock'],
                 'brand' => $new_product['brand'],
+                'discount' => $new_product['sale'],
                 'type' => $new_product['type'],
             ]);
 
@@ -125,8 +127,60 @@ class ProductController extends Controller
         return view('edit-product', compact('product'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $product_id)
     {
+        $edit_product = $request->validate([
+            'title' =>          ['required', 'string', 'min:2', 'max:190'],
+            'description' =>    ['nullable', 'string', 'min:2', 'max:190'],
+            'price' =>          ['required', 'integer', 'min:2'],
+            'stock' =>          ['required', 'integer', 'min:1'],
+            'brand' =>          ['required', 'string', 'min:1', 'max:190'],
+            'type' =>           ['required', 'string', 'min:2', 'max:190'],
+            'sale' =>           ['nullable', 'integer', 'min:0'],
+            'images.*' =>       ['nullable', 'mimes:jpg,jpeg,png', 'max:20000']
+        ]);
+
+        $images_input = $request->file('images');
+
+        try {
+            $product = Product::findOrFail($product_id);
+
+            $product->title = $edit_product['title'];
+            $product->description = $edit_product['description'] ? $edit_product['description'] : ' ';
+            $product->price = $edit_product['price'];
+            $product->stock = $edit_product['stock'];
+            $product->brand = $edit_product['brand'];
+            $product->type = $edit_product['type'];
+            $product->discount = $edit_product['sale'];
+
+            $product->save();
+
+            if (!is_null($images_input)) {
+                $images_db = Image::select('img_url', 'img_path', 'id')->where('product_id', $product_id)->get();
+
+                foreach ($images_db as $image_db) {
+                    Storage::disk('s3')->delete('images/' . $image_db->img_path);
+
+                    $image_db->delete();
+                }
+
+                foreach ($images_input as $image_input) {
+                    $path = $image_input->store('images', 's3');
+
+                    Storage::disk('s3')->setVisibility($path, 'public');
+
+                    Image::create([
+                        'img_url' => Storage::disk('s3')->url($path),
+                        'img_path' => basename($path),
+                        'product_id' => $product_id,
+                    ]);
+                }
+            }
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
+
+        return redirect()->route('home')->withMessage('El producto fue actualizado exitosamente.');
     }
 
     public function delete($product_id)
@@ -143,6 +197,6 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('home');
+        return redirect()->route('home')->withMessage('El producto fue eliminado exitosamente.');
     }
 }

@@ -110,7 +110,7 @@
 				placeholder="Este campo es opcional"
 				rows="3"
 				name="description"
-			></textarea>
+			>{{old('description')}}</textarea>
 			@error('description')
 				<small class="text-danger"> {{$message}} </small>
 			@enderror
@@ -122,6 +122,12 @@
 		<div class="custom-file">
 			<input required type="file" class="form-control" name="images[]" placeholder="address" multiple>
 		</div>
+		@error('images.*')
+			<small class="text-danger"> {{$message}} </small>
+		@enderror
+		@error('images[]')
+			<small class="text-danger"> {{$message}} </small>
+		@enderror
 	</div>
 	<div class="col-md-12 text-center mt-4">
 		<input type="submit" value="Añadir Producto" class="btn btn-success">

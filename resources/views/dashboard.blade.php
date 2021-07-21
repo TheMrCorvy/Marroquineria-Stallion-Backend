@@ -37,7 +37,7 @@
 						<span class="sr-only">Cargando...</span>
 					</div>
 				</div>
-				<div class="col-md-12 row" id="list-products"></div>
+				<div class="col-md-12 row justify-content-center" id="list-products"></div>
 			</div>
 		</div>
 	</div>
@@ -89,6 +89,9 @@
 	const getProducts = async (query) => {
 		const spinner = document.getElementById("spinner")
 		const searchInput = document.getElementById("search-input")
+		const productList = document.getElementById("list-products")
+
+		productList.innerHTML = ''
 
 		spinner.classList.remove("d-none")
 
@@ -108,17 +111,16 @@
 		spinner.classList.add("d-none")
 
 		if (!data.products || data.products.length === 0) {
-			document.getElementById("list-products").innerHTML = `
+			productList.innerHTML = `
 				<h4>No se encontró ningún producto...</h4>
 			`
 		} else {
-			document.getElementById("list-products").innerHTML = data.products.map(
-				(product) =>
-					`
-					<div class="card">
+			data.products.forEach(product => {
+				productList.innerHTML += `
+					<div class="card col-md-3">
 						<div class="card-body mr-3">
 							<div class="row">
-								<div class="col-md-8">
+								<div class="col-md-8 text-capitalize">
 									<h5>${product.title}</h5>
 								</div>
 								<div class="col-md-2 px-3">
@@ -150,8 +152,9 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-md-1"></div>
 				`
-			)
+			});
 		}
 	}
 

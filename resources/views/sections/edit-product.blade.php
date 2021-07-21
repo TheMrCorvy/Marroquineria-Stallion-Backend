@@ -127,4 +127,3 @@
 		})
 	})
 </script>
-<form action="{{route.product.edit.images}}" method="post" enctype="multipart/form-data"></form>

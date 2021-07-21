@@ -3,8 +3,8 @@
 	<div class="col-md-4">
 		<div class="form-group">
 			<label class="form-control-label">Nombre / Modelo del Producto:</label>
-			<input type="text" class="form-control" name="name" placeholder='Ej: Shield 24" Rojo'
-			value="{{old("name")}}" /> @error('name')
+			<input type="text" class="form-control" name="title" placeholder='Ej: Shield 24" Rojo'
+			value="{{old("title")}}" /> @error('title')
 			<small class="text-danger"> {{$message}} </small>
 			@enderror
 		</div>

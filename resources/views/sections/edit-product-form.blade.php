@@ -15,11 +15,15 @@
 			<select class="form-control" name="type">
 				<option value="{{$product->type}}" class="text-capitalize">{{$product->type}}</option>
 				<option value="mochilas">Mochilas</option>
+				<option value="portafolios">Portafolios</option>
 				<option value="valijas">Valijas</option>
 				<option value="bolsos">Bolsos</option>
 				<option value="porta-notebooks">Porta-Notebooks</option>
 				<option value="productos fabricados">Productos Fabricados</option>
 			</select>
+			@error('type')
+				<small class="text-danger"> {{$message}} </small>
+			@enderror
 		</div>
 	</div>
 	<div class="col-md-4">
@@ -62,7 +66,7 @@
 	<div class="col-md-4">
 		<div class="form-group">
 			<label>Descuento por Oferta:</label>
-			<select class="form-control" name="type">
+			<select class="form-control" name="sale">
 				<option value="{{$product->sale}}">{{$product->sale ? $product->sale : 0}}%</option>
 				<option value="0">0%</option>
 				<option value="1">1%</option>
@@ -89,24 +93,28 @@
 				<option value="85">85%</option>
 			</select>
 		</div>
+		@error('sale')
+			<small class="text-danger"> {{$message}} </small>
+		@enderror
 	</div>
 	<div class="col-md-8">
 		<div class="form-group">
 			<label class="form-control-label">Breve Descripción del Producto:</label>
 			<textarea
+				name="description"
 				id="description"
 				class="form-control"
 				placeholder="Este campo es opcional"
 				rows="3"
 			>{{$product->description}}</textarea>
-			@error('price')
+			@error('description')
 			<small class="text-danger"> {{$message}} </small>
 			@enderror
 			<small class="text-primary" id="description-count"></small>
 		</div>
 	</div>
 	<div class="col-md-4">
-		<label class="form-control-label">Imagenes (al menos una):</label>
+		<label class="form-control-label">Imagenes (opcional):</label>
 		<div class="custom-file">
 			<input required type="file" class="form-control" name="images[]" placeholder="address" multiple>
 		</div>
@@ -124,12 +132,12 @@
 		const description = document.getElementById("description")
 		const descriptionCount = document.getElementById("description-count")
 
-		descriptionCount.innerHTML = description.value.length + ' / 190'
+		descriptionCount.innerHTML = description.value.length + ' / 250'
 
 		description.addEventListener("keyup", (e) => {
-			descriptionCount.innerHTML = `${e.target.value.length} / 190`
+			descriptionCount.innerHTML = `${e.target.value.length} / 250`
 
-			if (e.target.value.length >= 190) {
+			if (e.target.value.length >= 250) {
 				descriptionCount.classList.remove("text-primary")
 				descriptionCount.classList.add("text-danger")
 			} else {

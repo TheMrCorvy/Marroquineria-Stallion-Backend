@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand"> 
                         <a href="{{route('home')}}">
-                            Panel de Control
+                            Inicio
                         </a>
                     </div>
                     <div class="col-6 collapse-close">

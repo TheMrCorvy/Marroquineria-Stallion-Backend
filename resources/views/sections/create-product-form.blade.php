@@ -1,4 +1,4 @@
-<form class="row justify-content-around" action="{{route('product.create')}}" enctype="multipart/form-data">
+<form class="row justify-content-around" action="{{route('product.create')}}" method="POST" enctype="multipart/form-data">
 	@csrf
 	<div class="col-md-4">
 		<div class="form-group">
@@ -14,11 +14,15 @@
 			<label>Tipo de Producto:</label>
 			<select class="form-control" name="type">
 				<option value="mochilas">Mochilas</option>
+				<option value="portafolio">Portafolios</option>
 				<option value="valijas">Valijas</option>
 				<option value="bolsos">Bolsos</option>
 				<option value="porta-notebooks">Porta-Notebooks</option>
 				<option value="productos fabricados">Productos Fabricados</option>
 			</select>
+			@error('type')
+				<small class="text-danger"> {{$message}} </small>
+			@enderror
 		</div>
 	</div>
 	<div class="col-md-4">
@@ -61,7 +65,7 @@
 	<div class="col-md-4">
 		<div class="form-group">
 			<label>Descuento por Oferta:</label>
-			<select class="form-control" name="type">
+			<select class="form-control" name="sale">
 				<option value="0">0%</option>
 				<option value="1">1%</option>
 				<option value="2">2%</option>
@@ -87,6 +91,9 @@
 				<option value="85">85%</option>
 			</select>
 		</div>
+		@error('sale')
+			<small class="text-danger"> {{$message}} </small>
+		@enderror
 	</div>
 	<div class="col-md-8">
 		<div class="form-group">
@@ -96,11 +103,12 @@
 				class="form-control"
 				placeholder="Este campo es opcional"
 				rows="3"
+				name="description"
 			></textarea>
-			@error('price')
-			<small class="text-danger"> {{$message}} </small>
+			@error('description')
+				<small class="text-danger"> {{$message}} </small>
 			@enderror
-			<small class="text-primary" id="description-count">0 / 190</small>
+			<small class="text-primary" id="description-count">0 / 250</small>
 		</div>
 	</div>
 	<div class="col-md-4">
@@ -123,9 +131,9 @@
 		const descriptionCount = document.getElementById("description-count")
 
 		description.addEventListener("keyup", (e) => {
-			descriptionCount.innerHTML = `${e.target.value.length} / 190`
+			descriptionCount.innerHTML = `${e.target.value.length} / 250`
 
-			if (e.target.value.length >= 190) {
+			if (e.target.value.length >= 250) {
 				descriptionCount.classList.remove("text-primary")
 				descriptionCount.classList.add("text-danger")
 			} else {

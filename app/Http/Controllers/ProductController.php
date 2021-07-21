@@ -73,10 +73,49 @@ class ProductController extends Controller
         // 
     }
 
+    public function create(Request $request)
+    {
+        $new_product = $request->validate([
+            'title' =>          ['required', 'string', 'min:2', 'max:190'],
+            'description' =>    ['nullable', 'string', 'min:2', 'max:190'],
+            'price' =>          ['required', 'integer', 'min:2'],
+            'stock' =>          ['required', 'integer', 'min:1'],
+            'brand' =>          ['required', 'string', 'min:1', 'max:190'],
+            'type' =>           ['required', 'string', 'min:2', 'max:190'],
+            'images.*' =>       ['nullable', 'mimes:jpg,jpeg,peng', 'max:20000']
+        ]);
+
+        try {
+            Product::create([
+                'title' => $new_product['title'],
+                'description' => $new_product['description'],
+                'price' => $new_product['price'],
+                'stock' => $new_product['stock'],
+                'brand' => $new_product['brand'],
+                'type' => $new_product['type'],
+            ]);
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
+    }
+
     public function edit($product_id)
     {
         $product = Product::findOrFail($product_id);
 
         return view('edit-product', compact('product'));
+    }
+
+    public function update(Request $request)
+    {
+    }
+
+    public function delete($product_id)
+    {
+        $product = Product::findOrFail($product_id);
+
+        $product->delete();
+
+        return redirect()->route('home');
     }
 }

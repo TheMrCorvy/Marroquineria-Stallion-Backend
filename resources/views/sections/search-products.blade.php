@@ -62,7 +62,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-white">Volver</button>
-				<a href="/product/delete/" id="link-delete" type="button" class="btn btn-link text-white ml-auto btn-outline-secondary" data-dismiss="modal">
+				<a href="/product/delete/" id="link-delete" class="btn btn-link text-white ml-auto btn-outline-secondary">
 					Aceptar
 				</a>
 			</div>

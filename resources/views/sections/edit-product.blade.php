@@ -3,8 +3,8 @@
 	<div class="col-md-4">
 		<div class="form-group">
 			<label class="form-control-label">Nombre / Modelo del Producto:</label>
-			<input type="text" class="form-control" name="name" placeholder='Ej: Shield 24" Rojo'
-			value="{{old("name")}}" /> @error('name')
+			<input type="text" class="form-control" name="title" placeholder='Ej: Shield 24" Rojo'
+			value="{{$product->title}}" /> @error('title')
 			<small class="text-danger"> {{$message}} </small>
 			@enderror
 		</div>
@@ -13,6 +13,7 @@
 		<div class="form-group">
 			<label>Tipo de Producto:</label>
 			<select class="form-control" name="type">
+				<option value="{{$product->type}}" class="text-capitalize">{{$product->type}}</option>
 				<option value="mochilas">Mochilas</option>
 				<option value="valijas">Valijas</option>
 				<option value="bolsos">Bolsos</option>
@@ -25,7 +26,7 @@
 		<div class="form-group">
 			<label class="form-control-label">Marca del Producto:</label>
 			<input type="text" class="form-control" name="brand" placeholder='Ej: Samsonite'
-			value="{{old("brand")}}" /> @error('brand')
+			value="{{$product->brand}}" /> @error('brand')
 			<small class="text-danger"> {{$message}} </small>
 			@enderror
 		</div>
@@ -37,7 +38,7 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text">$</span>
 				</div>
-				<input name="price" type="number" class="form-control" value="{{old("price")}}">
+				<input name="price" type="number" class="form-control" value="{{$product->actual_price}}">
 			</div>
 			@error('price')
 			<small class="text-danger"> {{$message}} </small>
@@ -48,7 +49,7 @@
 		<div class="form-group">
 			<label class="form-control-label">Cantidad Disponible en Stock:</label>
 			<div class="input-group">
-				<input name="stock" type="number" class="form-control" value="{{old("stock")}}">
+				<input name="stock" type="number" class="form-control" value="{{$product->stock}}">
 				<div class="input-group-append">
 					<span class="input-group-text">Unidad/es</span>
 				</div>
@@ -62,6 +63,7 @@
 		<div class="form-group">
 			<label>Descuento por Oferta:</label>
 			<select class="form-control" name="type">
+				<option value="{{$product->sale}}">{{$product->sale}}%</option>
 				<option value="0">0%</option>
 				<option value="1">1%</option>
 				<option value="2">2%</option>
@@ -96,7 +98,7 @@
 				class="form-control"
 				placeholder="Este campo es opcional"
 				rows="3"
-			></textarea>
+			>{{$product->description}}</textarea>
 			@error('price')
 			<small class="text-danger"> {{$message}} </small>
 			@enderror

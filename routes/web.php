@@ -12,4 +12,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::view('/home', 'dashboard')->name('home');
 
     Route::get('/logout', 'AdminController@logout')->name('logout');
+
+    Route::group(['prefix' => 'product'], function () {
+        Route::post('/create', 'ProductController@create')->name('product.create');
+    });
 });

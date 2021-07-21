@@ -1,4 +1,4 @@
-<form class="row justify-content-around">
+<form class="row justify-content-around" action="{{route('product.create')}}">
     @csrf
     <div class="col-md-4">
         <div class="form-group">
@@ -121,13 +121,32 @@
             <label class="form-control-label"
                 >Breve Descripción del Producto:</label
             >
-            <textarea class="form-control" placeholder="Este campo es opcional" rows="3"></textarea>
+            <textarea id="description" class="form-control" placeholder="Este campo es opcional" rows="3"></textarea>
             @error('price')
                 <small class="text-danger">
                     {{$message}}
                 </small>
             @enderror
-            <small class="text-primary">0 / 190</small>
+            <small class="text-primary" id="description-count">0 / 190</small>
         </div>
     </div>
 </form>
+
+<script>
+    window.addEventListener('load', () => {
+        const description = document.getElementById('description')
+        const descriptionCount = document.getElementById('description-count')
+
+        description.addEventListener('keyup', (e) => {
+            descriptionCount.innerHTML = `${description.value.length} / 190`
+
+            if (description.value.length >= 190) {
+                descriptionCount.classList.remove('text-primary')
+                descriptionCount.classList.add('text-danger')
+            }else {
+                descriptionCount.classList.add('text-primary')
+                descriptionCount.classList.remove('text-danger')
+            }
+        })
+    })
+</script>

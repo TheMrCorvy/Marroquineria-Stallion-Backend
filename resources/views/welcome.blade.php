@@ -6,7 +6,7 @@
             <div class="page-header-image" style="background-image: url('{{asset('argon')}}/img/register_bg.png');"></div>
                 <div class="container" id="container">
                     <div class="form-container sign-in-container">
-                        <form method="POST" action="{{route('login')}}" role="form">
+                        <form method="POST" action="{{route('login.form')}}" role="form">
                             @csrf
                             <div class="w-100 justify-center text-center mt-4">
                                 <h2>Ingresar</h2>

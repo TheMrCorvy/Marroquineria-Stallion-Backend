@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'guest'], function () {
     Route::view('/', 'welcome')->name('welcome');
 
-    Route::post('/login', 'AdminController@login')->name('login');
+    Route::post('/login', 'AdminController@login')->name('login.form');
+
+    Route::view('/login', 'welcome')->name('login');
 });
 
 Route::group(['middleware' => 'auth'], function () {

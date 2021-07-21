@@ -1,4 +1,4 @@
-<form class="row justify-content-around" action="{{route('product.edit', $product->id)}}">
+<form class="row justify-content-around" action="{{route('product.update', $product->id)}}">
 	@csrf
 	<div class="col-md-4">
 		<div class="form-group">
@@ -38,7 +38,7 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text">$</span>
 				</div>
-				<input name="price" type="number" class="form-control" value="{{$product->actual_price}}">
+				<input name="price" type="number" class="form-control" value="{{$product->price}}">
 			</div>
 			@error('price')
 			<small class="text-danger"> {{$message}} </small>
@@ -63,7 +63,7 @@
 		<div class="form-group">
 			<label>Descuento por Oferta:</label>
 			<select class="form-control" name="type">
-				<option value="{{$product->sale}}">{{$product->sale}}%</option>
+				<option value="{{$product->sale}}">{{$product->sale ? $product->sale : 0}}%</option>
 				<option value="0">0%</option>
 				<option value="1">1%</option>
 				<option value="2">2%</option>
@@ -102,7 +102,7 @@
 			@error('price')
 			<small class="text-danger"> {{$message}} </small>
 			@enderror
-			<small class="text-primary" id="description-count">0 / 190</small>
+			<small class="text-primary" id="description-count"></small>
 		</div>
 	</div>
 	<div class="col-md-12 text-center mt-4">
@@ -113,6 +113,8 @@
 	window.addEventListener("load", () => {
 		const description = document.getElementById("description")
 		const descriptionCount = document.getElementById("description-count")
+
+		descriptionCount.innerHTML = description.value.length + ' / 190'
 
 		description.addEventListener("keyup", (e) => {
 			descriptionCount.innerHTML = `${e.target.value.length} / 190`

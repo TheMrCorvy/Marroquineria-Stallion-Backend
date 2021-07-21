@@ -105,8 +105,18 @@
 			<small class="text-primary" id="description-count"></small>
 		</div>
 	</div>
+	<div class="col-md-4">
+		<label class="form-control-label">Imagenes (al menos una):</label>
+		<div class="custom-file">
+			<input required type="file" class="form-control" name="images[]" placeholder="address" multiple>
+		</div>
+		<small class="text-danger">Las imágenes subidas reemplazarán a las que actualmente están online</small>
+	</div>
 	<div class="col-md-12 text-center mt-4">
 		<input type="submit" value="Guardar Cambios" class="btn btn-success">
+		<br>
+		<br>
+		<small>Al enviar el formulario, es posible que se demore un rato en procesar todo.</small>
 	</div>
 </form>
 <script>

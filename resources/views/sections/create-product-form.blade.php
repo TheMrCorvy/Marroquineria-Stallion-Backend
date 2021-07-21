@@ -112,6 +112,7 @@
 	<div class="col-md-12 text-center mt-4">
 		<input type="submit" value="Añadir Producto" class="btn btn-success">
 		<br>
+		<br>
 		<small>Al enviar el formulario, es posible que se demore un rato en procesar todo.</small>
 	</div>
 </form>

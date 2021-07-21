@@ -1,4 +1,9 @@
-<form class="row justify-content-around" method="POST" action="{{route('product.update', $product->id)}}">
+<form 
+	class="row justify-content-around" 
+	method="POST" 
+	action="{{route('product.update', $product->id)}}"
+	enctype="multipart/form-data"
+>
 	@csrf
 	<div class="col-md-4">
 		<div class="form-group">
@@ -116,7 +121,7 @@
 	<div class="col-md-4">
 		<label class="form-control-label">Imagenes (opcional):</label>
 		<div class="custom-file">
-			<input type="file" class="form-control" name="images[]" placeholder="address" multiple>
+			<input type="file" class="form-control" name="images[]" multiple>
 		</div>
 		<small class="text-danger">Las imágenes subidas reemplazarán a las que actualmente están online</small>
 		@error('images')

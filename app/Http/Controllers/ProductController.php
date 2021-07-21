@@ -86,7 +86,7 @@ class ProductController extends Controller
             'brand' =>          ['required', 'string', 'min:1', 'max:190'],
             'type' =>           ['required', 'string', 'min:2', 'max:190'],
             'sale' =>           ['nullable', 'integer', 'min:0'],
-            'images.*' =>       ['required', 'mimes:jpg,jpeg,png', 'max:20000']
+            'images.*' =>       ['required']
         ]);
 
         try {
@@ -137,7 +137,7 @@ class ProductController extends Controller
             'brand' =>          ['required', 'string', 'min:1', 'max:190'],
             'type' =>           ['required', 'string', 'min:2', 'max:190'],
             'sale' =>           ['nullable', 'integer', 'min:0'],
-            'images.*' =>       ['nullable', 'mimes:jpg,jpeg,png', 'max:20000']
+            'images.*' =>       ['nullable'],
         ]);
 
         $images_input = $request->file('images');

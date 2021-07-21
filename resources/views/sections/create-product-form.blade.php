@@ -120,7 +120,7 @@
 	<div class="col-md-4">
 		<label class="form-control-label">Imagenes (al menos una):</label>
 		<div class="custom-file">
-			<input required type="file" class="form-control" name="images[]" placeholder="address" multiple>
+			<input required type="file" class="form-control" name="images[]" multiple>
 		</div>
 		@error('images.*')
 			<small class="text-danger"> {{$message}} </small>

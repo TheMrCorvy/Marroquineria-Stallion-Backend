@@ -1,4 +1,10 @@
-<form class="row justify-content-around" action="{{route('product.create')}}" method="POST" enctype="multipart/form-data">
+<form 
+	class="row justify-content-around" 
+	id="form-create" 
+	action="{{route('product.create')}}" 
+	method="POST" 
+	enctype="multipart/form-data"
+>
 	@csrf
 	<div class="col-md-4">
 		<div class="form-group">
@@ -140,6 +146,10 @@
 				descriptionCount.classList.add("text-primary")
 				descriptionCount.classList.remove("text-danger")
 			}
+		})
+
+		document.getElementById('form-create').addEventListener('submit', () => {
+			document.getElementById('spinner').classList.remove('d-none')
 		})
 	})
 </script>

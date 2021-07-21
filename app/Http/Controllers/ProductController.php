@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
+use App\Models\Image;
 
 use Validator;
+
+use Storage;
 
 class ProductController extends Controller
 {
@@ -86,7 +89,7 @@ class ProductController extends Controller
         ]);
 
         try {
-            Product::create([
+            $product_created = Product::create([
                 'title' => $new_product['title'],
                 'description' => $new_product['description'],
                 'price' => $new_product['price'],
@@ -94,9 +97,26 @@ class ProductController extends Controller
                 'brand' => $new_product['brand'],
                 'type' => $new_product['type'],
             ]);
+
+            $images = $request->file('images');
+
+            foreach ($images as $image) {
+                $path = $image->store('logos', 's3');
+
+                Storage::disk('s3')->setVisibility($path, 'public');
+
+                Image::create([
+                    'img_url' => Storage::disk('s3')->url($path),
+                    'img_path' => basename($path),
+                    'product_id' => $product_created->id,
+                ]);
+            }
         } catch (\Throwable $th) {
-            return view('errors.500');
+            // return view('errors.500');
+            dd($th);
         }
+
+        return redirect()->route('home')->withMessage('El producto fue añadido exitosamente.');
     }
 
     public function edit($product_id)

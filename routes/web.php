@@ -30,6 +30,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/update/{method_id}', 'ShippingController@update_method')->name('shipping_method.update');
 
-        Route::post('/delete/{method_id}', 'ShippingController@delete_method')->name('shipping_method.delete');
+        Route::get('/delete/{method_id}', 'ShippingController@delete_method')->name('shipping_method.delete');
     });
 });

@@ -11,7 +11,7 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::view('/home', 'dashboard')->name('home');
+    Route::get('/home', 'AdminController@dashboard')->name('home');
 
     Route::get('/logout', 'AdminController@logout')->name('logout');
 
@@ -23,5 +23,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/update/{id}', 'ProductController@update')->name('product.update');
 
         Route::get('/delete/{id}', 'ProductController@delete')->name('product.delete');
+    });
+
+    Route::group(['prefix' => 'shipping_method'], function () {
+        Route::post('/create', 'ShippingController@create_method')->name('shipping_method.create');
+
+        Route::post('/update/{method_id}', 'ShippingController@update_method')->name('shipping_method.update');
+
+        Route::post('/delete/{method_id}', 'ShippingController@delete_method')->name('shipping_method.delete');
     });
 });

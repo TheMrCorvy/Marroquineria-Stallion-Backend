@@ -19,4 +19,21 @@ class ShippingController extends Controller
             'shipping_options' => $shipping_options,
         ], 200);
     }
+
+    public function create_method(Request $request)
+    {
+        $data = $request->validate([
+            'method' => ['string', 'required', 'min:2', 'max:100', 'unique:shipping_methods,method'],
+        ]);
+
+        try {
+            ShippingMethod::create([
+                'method' => ucfirst($data['method']),
+            ]);
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
+
+        return redirect()->route('home')->withMessage('Nuevo método de envío añadido exitosamente.');
+    }
 }

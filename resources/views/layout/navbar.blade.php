@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-default py-0 fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="{{route('home')}}">Panel De Control</a>
+        <a class="navbar-brand" href="{{route('home')}}">Inicio</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-default" aria-controls="navbar-default" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

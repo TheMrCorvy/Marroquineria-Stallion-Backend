@@ -19,6 +19,7 @@ class CreateSalesTable extends Migration
             $table->string('title');
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->integer('unit_price');
+            $table->integer('amount');
             $table->timestamps();
         });
     }
@@ -30,10 +31,10 @@ class CreateSalesTable extends Migration
      */
     public function down()
     {
-        Schema::table('sales', function(BluePrint $table){
+        Schema::table('sales', function (BluePrint $table) {
             $table->dropForeign(['sale_order_id']);
             $table->dropColumn('sale_order_id');
-            
+
             $table->dropForeign(['product_id']);
             $table->dropColumn('product_id');
         });

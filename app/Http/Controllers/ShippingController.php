@@ -37,8 +37,23 @@ class ShippingController extends Controller
         return redirect()->route('home')->withMessage('Nuevo método de envío añadido exitosamente.');
     }
 
-    public function update_method(Request $request)
+    public function update_method(Request $request, $method_id)
     {
+        $data = $request->validate([
+            'method' => ['string', 'required', 'min:2', 'max:100', 'unique:shipping_methods,method'],
+        ]);
+
+        try {
+            $method = ShippingMethod::findOrFail($method_id);
+
+            $method->method = ucfirst($data['method']);
+
+            $method->save();
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
+
+        return redirect()->route('home')->withMessage('Método de envío actualizado exitosamente.');
     }
 
     public function delete_method($method_id)

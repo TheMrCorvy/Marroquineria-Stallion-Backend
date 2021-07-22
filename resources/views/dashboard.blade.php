@@ -14,7 +14,7 @@
 			@include('sections.search-products')
 		</div>
 	</div>
-	<div class="card mb-4">
+	<div class="card mt-4">
 		<div class="card-header">
 			<h3 class="mb-0">Administrar Envíos</h3>
 		</div>
@@ -27,6 +27,8 @@
 		</div>
 		<div class="card-footer">
 			@include('sections.create-shipping-zone-form', ['shipping_methods' => $shipping_methods])
+
+			@include('sections.list-shipping-zones', ['shipping_zones' => $shipping_zones])
 		</div>
 	</div>
 </div>

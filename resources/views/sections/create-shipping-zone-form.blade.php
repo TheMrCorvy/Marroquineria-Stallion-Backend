@@ -43,16 +43,15 @@
             @enderror
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 mb-4">
         <div class="form-group">
             <label class="form-control-label">Tiempo Estimado de la Entrega:</label>
-            <br>
-            <small>(Más o menos cuánto va a demorar en entregarse)</small>
             <input name="delay" type="text" placeholder="Ej: De 1 a 3 días hábiles" class="form-control" value="{{old("delay")}}">
             @error('delay')
-                <small class="text-danger"> {{$message}} </small>
+            <small class="text-danger"> {{$message}} </small>
             @enderror
         </div>
+        <small>(Más o menos cuánto va a demorar en entregarse)</small>
     </div>
     <div class="col-md-12 text-center">
         <input type="submit" value="Añadir" class="btn btn-success">

@@ -54,6 +54,7 @@ class AdminController extends Controller
         )
             ->select(
                 'shipping_methods.method',
+                'shipping_zones.id',
                 'shipping_zones.shipping_method_id',
                 'shipping_zones.region',
                 'shipping_zones.delay',

@@ -88,6 +88,17 @@ class ShippingController extends Controller
             return view('errors.500');
         }
 
-        return redirect()->route('home')->withMessage('Zona de envío añadida exitosamente.');
+        return redirect()->route('home')->withMessage('La zona de envío añadida exitosamente.');
+    }
+
+    public function delete_zone($zone_id)
+    {
+        try {
+            ShippingZone::findOrFail($zone_id)->delete();
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
+
+        return redirect()->route('home')->withMessage('La zona de envío eliminada exitosamente.');
     }
 }

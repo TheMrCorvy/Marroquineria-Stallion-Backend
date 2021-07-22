@@ -66,4 +66,28 @@ class ShippingController extends Controller
 
         return redirect()->route('home')->withMessage('Método de envío eliminado exitosamente.');
     }
+
+    public function create_zone(Request $request)
+    {
+        $data = $request->validate([
+            'shipping_method_id' => ['integer', 'required', 'min:1', 'exists:shipping_methods,id'],
+            'region' => ['string', 'required', 'min:3', 'max:190'],
+            'delay' => ['string', 'required', 'min:3', 'max:190'],
+            'price' => ['integer', 'required', 'min:1']
+        ]);
+
+        try {
+            ShippingZone::create([
+                'shipping_method_id' => $data['shipping_method_id'],
+                'region' => $data['region'],
+                'delay' => $data['delay'],
+                'actual_price' => $data['price'],
+                'price' => '$ ' . $data['price'],
+            ]);
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
+
+        return redirect()->route('home')->withMessage('Zona de envío añadida exitosamente.');
+    }
 }

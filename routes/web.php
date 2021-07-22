@@ -32,4 +32,12 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/delete/{method_id}', 'ShippingController@delete_method')->name('shipping_method.delete');
     });
+
+    Route::group(['prefix' => 'shipping_zone'], function () {
+        Route::post('/create', 'ShippingController@create_zone')->name('shipping_zone.create');
+
+        Route::post('/update/{zone_id}', 'ShippingController@update_zone')->name('shipping_zone.update');
+
+        Route::get('/delete/{zone_id}', 'ShippingController@delete_zone')->name('shipping_zone.delete');
+    });
 });

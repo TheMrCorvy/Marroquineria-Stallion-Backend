@@ -28,7 +28,10 @@
 		<div class="card-footer">
 			@include('sections.create-shipping-zone-form', ['shipping_methods' => $shipping_methods])
 
-			@include('sections.list-shipping-zones', ['shipping_zones' => $shipping_zones])
+			@include('sections.list-shipping-zones', [
+				'shipping_zones' => $shipping_zones, 
+				'shipping_methods' => $shipping_methods
+			])
 		</div>
 	</div>
 </div>

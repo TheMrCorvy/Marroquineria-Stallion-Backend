@@ -91,6 +91,32 @@ class ShippingController extends Controller
         return redirect()->route('home')->withMessage('La zona de envío añadida exitosamente.');
     }
 
+    public function update_zone(Request $request, $zone_id)
+    {
+        $data = $request->validate([
+            'region' => ['string', 'required', 'min:2', 'max:100', 'unique:shipping_zones,region'],
+            'price' => ['integer', 'required', 'min:1'],
+            'delay' => ['string', 'required', 'min:3', 'max:190'],
+            'shipping_method_id' => ['integer', 'required', 'exists:shipping_methods,id'],
+        ]);
+
+        try {
+            $zone = ShippingZone::findOrFail($zone_id);
+
+            $zone->region = ucfirst($data['region']);
+            $zone->actual_price = $data['price'];
+            $zone->price = '$ ' . $data['price'];
+            $zone->delay = $data['delay'];
+            $zone->shipping_method_id = $data['shipping_method_id'];
+
+            $zone->save();
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
+
+        return redirect()->route('home')->withMessage('Método de envío actualizado exitosamente.');
+    }
+
     public function delete_zone($zone_id)
     {
         try {

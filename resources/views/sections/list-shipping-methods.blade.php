@@ -71,7 +71,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-white">Volver</button>
+				<button type="button" data-dismiss="modal" class="btn btn-white">Volver</button>
 				<a
 					href="/shippint_method/delete/"
 					id="link-delete-shipping-method"
@@ -120,7 +120,7 @@
 			</div>
 
 			<div class="modal-footer text-right">
-				<button type="button" class="btn btn-primary">Volver</button>
+				<button type="button" data-dismiss="modal" class="btn btn-primary">Volver</button>
 			</div>
 		</div>
 	</div>

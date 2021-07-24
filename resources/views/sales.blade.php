@@ -307,7 +307,129 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					facturacion
+					<div class="row justify-content-around">
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label for="name" class="form-control-label">Nombre:</label>
+								<input 
+									class="form-control text-capitalize" 
+									type="text" 
+									disabled 
+									id="name"
+									value="{{$billing_info->name}}"
+								>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label for="email" class="form-control-label">Email:</label>
+								<input 
+									class="form-control" 
+									type="text" 
+									disabled 
+									id="email"
+									value="{{$billing_info->email}}"
+								>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label for="dni_or_cuil" class="form-control-label">DNI o CUIL:</label>
+								<input 
+									class="form-control text-capitalize" 
+									type="text" 
+									disabled 
+									id="dni_or_cuil"
+									value="{{number_format($billing_info->dni_or_cuil, 0, ',', '.')}}"
+								>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label for="streetOne" class="form-control-label">Calle Principal:</label>
+								<textarea
+										class="form-control"
+										rows="5"
+										name="streetOne"
+										disabled
+									>{{$billing_info->billing_address->streetOne}}</textarea>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label for="streetTwo" class="form-control-label">Calle Secundaria:</label>
+								<input 
+									class="form-control text-capitalize" 
+									type="text" 
+									disabled 
+									id="streetTwo"
+									value="{{$billing_info->billing_address->streetTwo}}"
+								>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label for="number" class="form-control-label">Altura:</label>
+								<input 
+									class="form-control text-capitalize" 
+									type="text" 
+									disabled 
+									id="number"
+									value="{{$billing_info->billing_address->number}}"
+								>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label for="postalCode" class="form-control-label">Código Postal:</label>
+								<input 
+									class="form-control text-capitalize" 
+									type="text" 
+									disabled 
+									id="postalCode"
+									value="{{$billing_info->billing_address->postalCode}}"
+								>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label for="state" class="form-control-label">Provincia:</label>
+								<input 
+									class="form-control text-capitalize" 
+									type="text" 
+									disabled 
+									id="state"
+									value="{{$billing_info->billing_address->state}}"
+								>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label for="city" class="form-control-label">Ciudad:</label>
+								<input 
+									class="form-control text-capitalize" 
+									type="text" 
+									disabled 
+									id="city"
+									value="{{$billing_info->billing_address->city}}"
+								>
+							</div>
+						</div>
+						@if ($billing_info->billing_address->town)
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label for="town" class="form-control-label">Barrio / Localidad:</label>
+									<input 
+										class="form-control text-capitalize" 
+										type="text" 
+										disabled 
+										id="town"
+										value="{{$billing_info->billing_address->town}}"
+									>
+								</div>
+							</div>
+						@endif
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Volver</button>

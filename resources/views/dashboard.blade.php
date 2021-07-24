@@ -5,6 +5,7 @@
 			<strong>Éxito!</strong> {{Session::get('message')}}
 		</div>
 	@endif
+	@include('sections.password-validation-messages')
 	<div class="card mb-4">
 		<div class="card-header">
 			<h3 class="mb-0">Añadir un Producto</h3>

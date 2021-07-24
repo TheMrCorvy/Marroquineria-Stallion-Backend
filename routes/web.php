@@ -15,6 +15,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/logout', 'AdminController@logout')->name('logout');
 
+    Route::post('/change-password', 'AdminController@change_password')->name('change_password');
+
     Route::group(['prefix' => 'product'], function () {
         Route::post('/create', 'ProductController@create')->name('product.create');
 

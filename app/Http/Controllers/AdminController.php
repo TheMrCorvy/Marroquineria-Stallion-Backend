@@ -9,6 +9,7 @@ use App\Models\ShippingMethod;
 use App\Models\ShippingZone;
 
 use Auth;
+use Hash;
 
 class AdminController extends Controller
 {
@@ -16,7 +17,7 @@ class AdminController extends Controller
     {
         $data = $request->validate([
             'email' => ['email', 'required', 'min:4', 'max:50', 'exists:users,email'],
-            'password' => ['required', 'string', 'min:4', 'max:10', 'alpha']
+            'password' => ['required', 'string', 'min:4', 'max:100', 'alpha_dash']
         ]);
 
         try {
@@ -41,6 +42,26 @@ class AdminController extends Controller
         Auth::logout();
 
         return redirect()->route('welcome');
+    }
+
+    public function change_password(Request $request)
+    {
+        $data = $request->validate([
+            'password' => ['required', 'string', 'min:4', 'max:100', 'alpha_dash', 'confirmed'],
+            'password_confirmation' => ['required', 'string', 'min:4', 'max:100', 'alpha_dash'],
+        ]);
+
+        try {
+            $user = User::findOrFail(Auth::user()->id);
+
+            $user->password = Hash::make($data['password']);
+
+            $user->save();
+        } catch (\Throwable $th) {
+            return view('errors.500');
+        }
+
+        return redirect()->route('home')->withMessage('Contraseña actualizada exitosamente.');
     }
 
     public function dashboard()

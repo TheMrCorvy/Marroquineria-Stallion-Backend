@@ -88,6 +88,7 @@
 								<th scope="col">Producto</th>
 								<th scope="col">Precio Unitario</th>
 								<th scope="col">Cantidad Comprada</th>
+								<th scope="col">Subtotal</th>
 								<th scope="col">Detalles Producto</th>
 							</tr>
 						</thead>
@@ -100,8 +101,18 @@
 								<td class="text-success">
 									<strong>$ {{number_format($sale_detail['unit_price'], 2, ',', '.')}}</strong>
 								</td>
-								<td>
-									{{$sale_detail['amount']}}
+								<td class="text-warning">
+									<strong>{{$sale_detail['amount']}}</strong>
+								</td>
+								<td class="text-warning">
+									<strong>$ 
+										{{number_format(
+											$sale_detail['amount'] * $sale_detail['unit_price'], 
+											2, 
+											',', 
+											'.'
+										)}}
+									</strong>
 								</td>
 								<td>
 									<a 

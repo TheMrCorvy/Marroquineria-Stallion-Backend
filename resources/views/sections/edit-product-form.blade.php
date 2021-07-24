@@ -18,7 +18,7 @@
 		<div class="form-group">
 			<label>Tipo de Producto:</label>
 			<select class="form-control" name="type">
-				<option value="{{$product->type}}" class="text-capitalize">{{$product->type}}</option>
+				<option value="{{$product->type}}" class="text-capitalize">{{ucfirst($product->type)}}</option>
 				<option value="mochilas">Mochilas</option>
 				<option value="portafolios">Portafolios</option>
 				<option value="valijas">Valijas</option>

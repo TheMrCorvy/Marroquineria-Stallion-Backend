@@ -18,7 +18,7 @@ class SalesSeeder extends Seeder
         DB::table('sale_orders')->insert([
             'date' => now(),
             'payment_method' => 'MercadoPago',
-            'total_price' => '800.92',
+            'total_price' => '80000.92',
         ]);
 
         DB::table('sales')->insert([

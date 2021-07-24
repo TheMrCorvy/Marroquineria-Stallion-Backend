@@ -65,6 +65,9 @@
 				</div>
 			</div>
 		</div>
+		<div class="card-footer">
+			{{$sales->links()}}
+		</div>
 	</div>
 </div>
 

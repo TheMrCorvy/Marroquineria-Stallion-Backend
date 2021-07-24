@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\ShippingMethod;
 use App\Models\ShippingZone;
+use App\Models\SaleOrder;
+use App\Models\Product;
 
 use Auth;
 use Hash;
@@ -85,5 +87,12 @@ class AdminController extends Controller
             ->get();
 
         return view('dashboard', compact('shipping_zones', 'shipping_methods'));
+    }
+
+    public function review_sales()
+    {
+        $sales = SaleOrder::with('sales')->paginate(15);
+
+        return view('sales', compact('sales'));
     }
 }

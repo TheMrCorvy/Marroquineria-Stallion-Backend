@@ -39,6 +39,20 @@
 				<li class="nav-item">
 					<a
 						class="nav-link nav-link-icon"
+						href="{{route('review_sales')}}"
+						data-toggle="tooltip"
+						data-placement="bottom"
+						title="Ver Ventas"
+						data-container="body"
+						data-animation="true"
+					>
+						<i class="ni ni-money-coins"></i>
+						<span class="nav-link-inner--text">Ventas</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a
+						class="nav-link nav-link-icon"
 						data-toggle="tooltip"
 						data-placement="bottom"
 						title="Cambiar Contraseña"

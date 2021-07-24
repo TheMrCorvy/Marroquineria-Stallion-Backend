@@ -20,8 +20,8 @@ class SaleOrder extends Model
         'date',
         'payment_method',
         'total_price',
-        'billing_address',
-        'shipping_address',
+        'billing_info',
+        'shipping_info',
         'sales'
     ];
 

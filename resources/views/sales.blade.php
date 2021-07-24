@@ -44,12 +44,12 @@
 									<strong>$ {{number_format($sale['total_price'], 2, ',', '.')}}</strong>
 								</td>
 								<td>
-									<a href="#" class="btn btn-link text-primary">
+									<a href="#" class="btn btn-link text-primary" data-toggle="modal" data-target="#detalleFacturacion-{{$sale['id']}}">
 										Ver Datos
 									</a>
 								</td>
 								<td>
-									<a href="#" class="btn btn-link text-primary">
+									<a href="#" class="btn btn-link text-primary" data-toggle="modal" data-target="#detalleEnvio-{{$sale['id']}}">
 										Ver Datos
 									</a>
 								</td>
@@ -72,6 +72,13 @@
 </div>
 
 @foreach ($sales as $sale)
+
+	@php
+		$shipping_info = json_decode($sale['shipping_info']);
+
+		$billing_info = json_decode($sale['billing_info']);
+	@endphp
+
 	<div class="modal fade" id="detalleVenta-{{$sale['id']}}" tabindex="-1" role="dialog" aria-labelledby="detalleVentaLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
 			<div class="modal-content">
@@ -127,6 +134,180 @@
 							@endforeach
 						</tbody>
 					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Volver</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="detalleEnvio-{{$sale['id']}}" tabindex="-1" role="dialog" aria-labelledby="detalleEnvioLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="detalleEnvioLabel">Detalle del Envío</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row justify-content-around">
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label for="name" class="form-control-label">Nombre:</label>
+								<input class="form-control text-capitalize" type="text" disabled id="name" value="{{$shipping_info->name}}">
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label for="email" class="form-control-label">Email:</label>
+								<input class="form-control" type="text" disabled id="email" value="{{$shipping_info->email}}">
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<div class="form-group">
+								<label for="phone_number" class="form-control-label">Número de Teléfono:</label>
+								<input class="form-control" type="text" disabled id="phone_number" value="{{$shipping_info->phone_number}}">
+							</div>
+						</div>
+						<div class="col-lg-12">
+							<h5 class="text-center mt-3">Opción de Envío Elegida:</h5>
+						</div>
+
+						@if (!$shipping_info->send)
+							<div class="col-lg-12 mt-3">
+								<h5 class="text-center text-warning">Lo retirará en persona en el local.</h5>
+							</div>
+						@else
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label for="method" class="form-control-label">Método de Envío:</label>
+									<input 
+										class="form-control text-capitalize" 
+										type="text" 
+										disabled 
+										id="method" 
+										value="{{$shipping_info->shipping_option->method}}"
+									>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label for="region" class="form-control-label">Zona / Región de Envío:</label>
+									<input class="form-control text-capitalize" type="text" disabled id="region" {{$shipping_info->shipping_option->region}}>
+								</div>
+							</div>
+							<div class="col-lg-12">
+								<h5 class="text-center mt-3">Datos del Domicilio:</h5>
+							</div>
+							<div class="col-lg-6">
+								<div class="form-group">
+									<label for="streetOne" class="form-control-label">Calle Primaria:</label>
+									<textarea
+										class="form-control"
+										rows="5"
+										name="streetOne"
+										disabled
+									>{{$shipping_info->shipping_address->streetOne}}</textarea>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="form-group">
+									<label for="streetTwo" class="form-control-label">Calle Secundaria:</label>
+									<input 
+										class="form-control text-capitalize" 
+										type="text" 
+										disabled 
+										id="streetTwo" 
+										value="{{$shipping_info->shipping_address->streetTwo}}"
+									>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="form-group">
+									<label for="number" class="form-control-label">Altura:</label>
+									<input 
+										class="form-control text-capitalize" 
+										type="text" 
+										disabled 
+										id="number"
+										value="{{$shipping_info->shipping_address->number}}"
+									>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="form-group">
+									<label for="postalCode" class="form-control-label">Código Postal:</label>
+									<input 
+										class="form-control text-capitalize" 
+										type="text" 
+										disabled 
+										id="postalCode"
+										value="{{$shipping_info->shipping_address->postalCode}}"
+									>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label for="state" class="form-control-label">Provincia:</label>
+									<input 
+										class="form-control text-capitalize" 
+										type="text" 
+										disabled 
+										id="state"
+										value="{{$shipping_info->shipping_address->state}}"
+									>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group">
+									<label for="city" class="form-control-label">Ciudad:</label>
+									<input 
+										class="form-control text-capitalize" 
+										type="text" 
+										disabled 
+										id="city"
+										value="{{$shipping_info->shipping_address->city}}"
+									>
+								</div>
+							</div>
+							
+							@if ($shipping_info->shipping_address->town)
+								<div class="col-lg-4">
+									<div class="form-group">
+										<label for="town" class="form-control-label">Localidad / Barrio:</label>
+										<input 
+											class="form-control text-capitalize" 
+											type="text" 
+											disabled 
+											id="town"
+											value="{{$shipping_info->shipping_address->town}}"
+										>
+									</div>
+								</div>
+							@endif
+						@endif
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Volver</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="detalleFacturacion-{{$sale['id']}}" tabindex="-1" role="dialog" aria-labelledby="detalleFacturacionLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="detalleFacturacionLabel">Detalle de Facturación</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					facturacion
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Volver</button>

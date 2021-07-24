@@ -18,8 +18,8 @@ class CreateSaleOrdersTable extends Migration
             $table->string('date');
             $table->string('payment_method'); // 'Online, MercadoPago' 'Efectivo en el Local'
             $table->string('total_price');
-            $table->json('billing_address')->nullable();
-            $table->json('shipping_address')->nullable();
+            $table->json('billing_info')->nullable();
+            $table->json('shipping_info')->nullable();
             $table->timestamps();
         });
     }

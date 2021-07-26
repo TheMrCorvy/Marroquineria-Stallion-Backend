@@ -62,15 +62,32 @@ class SaleController extends Controller
         ], 200);
     }
 
-    public function buy(Request $request, $method)
+    public function buy(Request $request)
     {
-        $info = $request->only('billing_info', 'shipping_info');
+        $info = $request->only(
+            'billing_info',
+            'shipping_info',
+            'total_price',
+            'cart_items',
+            'email',
+            'card_network',
+            'card_token',
+            'shipping_option_id',
+            'method'
+        );
 
         $validator = Validator::make(
             $info,
             [
+                'method' => ['required', 'string', 'min:3', 'max:15'],
                 'billing_info' => ['required', 'json'],
                 'shipping_info' => ['required', 'json'],
+                'total_price' => ['required', 'integer', 'min:1'],
+                'cart_items' => ['required', 'array:amount,id'],
+                'email' => ['required', 'email'],
+                'card_network' => ['required_unless:method,cash', 'string', 'min:1', 'max:190'],
+                'card_token' => ['required_unless:method,cash', 'string', 'min:1', 'max:255'],
+                'shipping_option_id' => ['required', 'integer', 'exists:shipping_zones,id']
             ]
         );
 
@@ -81,7 +98,7 @@ class SaleController extends Controller
             ], 400);
         }
 
-        if ($method !== 'mercadopago' && $method !== 'cash') {
+        if ($info['method'] !== 'mercadopago' && $info['method'] !== 'cash') {
             return response()->json([
                 'errors' => [
                     'payment_method' => 'invalid payment method'
@@ -103,7 +120,7 @@ class SaleController extends Controller
 
         $payment_method = 'Efectivo en el Local';
 
-        if ($method === 'mercadopago') {
+        if ($info['method'] === 'mercadopago') {
             $payment = $this->call_mercadopago(
                 $info['card_network'],
                 $info['card_token'],
@@ -117,7 +134,7 @@ class SaleController extends Controller
                     'errors' => [
                         'api_call_unsuccessful' => 'the api responded with a status different from "approved"'
                     ],
-                    'message' => 'Hubo un problema procesando tu pago y la compra no pudo ser concretada...'
+                    'message' => 'Hubo un problema procesando su pago y la compra no pudo ser concretada...'
                 ], 500);
             }
 
@@ -139,7 +156,7 @@ class SaleController extends Controller
                 'errors' => [
                     'db_connection_unsuccessful' => 'there was an error trying to reduce the stock of some products, or trying to create the sale order'
                 ],
-                'message' => 'Tu orden de compra no pudo ser finalizada, pero tu pago fue procesado. Te recomendamos que nos contactes para poder ayudarte.'
+                'message' => 'Su orden de compra no pudo ser finalizada, pero su pago fue procesado. Le recomendamos que nos contactes para poder ayudarte.'
             ], 500);
         }
 

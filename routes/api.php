@@ -16,5 +16,3 @@ Route::post('/buy', 'SaleController@buy');
 Route::post('/ask-for-fund', 'SaleController@ask_for_fund');
 
 Route::get('/get-shipping-options', 'ShippingController@get_shipping_options');
-
-Route::post('/prueba', 'SaleController@prueba');

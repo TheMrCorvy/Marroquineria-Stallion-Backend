@@ -7,6 +7,7 @@ use App\Models\Sale;
 use Illuminate\Http\Request;
 
 use Mail;
+use App\Mail\NotifyUser;
 
 use App\Models\User;
 use App\Models\SaleOrder;
@@ -169,7 +170,7 @@ class SaleController extends Controller
             ], 500);
         }
 
-        // Mail::to('info@yugiohparaelpueblo.com')->send(new MailPagoFinalRealizado); notificar al usuario sobre su compra
+        Mail::to($info['email'])->send(new NotifyUser($sale_order->id));
 
         return response()->json([
             'message' => 'Su compra fue finalizada exitosamente. Dentro de unos momentos recibirá un email con el código de su compra.'

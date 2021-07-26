@@ -216,7 +216,7 @@
 														font-size: 24px;
 														line-height: 32px;
 													"
-													>Si eligió la opción de recibir el producto en persona en el local, recuerde que su código para retirarlo es <strong style="color: #fb6340 !important">ST-MR-1</strong>.</span>
+													>Si eligió la opción de recibir el producto en persona en el local, recuerde que su código para retirarlo es <strong style="color: #fb6340 !important">ST-MR-{{$sale_order_id}}</strong>.</span>
 											</font>
 											<div
 												style="

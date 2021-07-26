@@ -195,7 +195,13 @@
 							<div class="col-lg-4">
 								<div class="form-group">
 									<label for="region" class="form-control-label">Zona / Región de Envío:</label>
-									<input class="form-control text-capitalize" type="text" disabled id="region" {{$shipping_info->shipping_option->region}}>
+									<input 
+										class="form-control text-capitalize" 
+										type="text" 
+										disabled 
+										id="region" 
+										value="{{$shipping_info->shipping_option->region}}"
+									>
 								</div>
 							</div>
 							<div class="col-lg-12">

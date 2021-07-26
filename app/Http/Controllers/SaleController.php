@@ -16,16 +16,21 @@ use App\Notifications\AskForFund;
 
 use Validator;
 
+use Illuminate\Support\Facades\Http;
+
 class SaleController extends Controller
 {
+    protected $base_uri;
+
+    protected $public_key;
+
+    protected $access_token;
+
     public function __construct()
     {
-        $this->baseUri = config('services.mercadopago.base_uri');
-        $this->key = config('services.mercadopago.key');
-        $this->secret = config('services.mercadopago.secret');
-        $this->baseCurrency = config('services.mercadopago.base_currency');
-
-        $this->converter = 'ars';
+        $this->base_uri = config('services.mercadopago.base_uri');
+        $this->public_key = config('services.mercadopago.public_key');
+        $this->access_token = config('services.mercadopago.access_token');
     }
 
     public function ask_for_fund(Request $request)
@@ -83,7 +88,7 @@ class SaleController extends Controller
                 'billing_info' => ['required', 'json'],
                 'shipping_info' => ['required', 'json'],
                 'total_price' => ['required', 'integer', 'min:1'],
-                'cart_items' => ['required', 'array:amount,id'],
+                'cart_items' => ['required'],
                 'email' => ['required', 'email'],
                 'card_network' => ['required_unless:method,cash', 'string', 'min:1', 'max:190'],
                 'card_token' => ['required_unless:method,cash', 'string', 'min:1', 'max:255'],
@@ -94,7 +99,8 @@ class SaleController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'errors' => $validator->errors(),
-                'message' => 'Hubo un error validando los datos enviados. Le recomendamos que vacíe su carrito de compras y vuelva a intentar.'
+                'message' => 'Hubo un error validando los datos enviados. Le recomendamos que vacíe su carrito de compras y vuelva a intentar.',
+                'request' => $info['cart_items'],
             ], 400);
         }
 
@@ -132,12 +138,12 @@ class SaleController extends Controller
                 $total_amount,
             );
 
-            if ($payment[0]->status !== 'approved') {
+            if (!$payment || $payment['status'] !== 'approved') {
                 return response()->json([
                     'errors' => [
                         'api_call_unsuccessful' => 'the api responded with a status different from "approved"'
                     ],
-                    'message' => 'Hubo un problema procesando su pago y la compra no pudo ser concretada...'
+                    'message' => 'Hubo un problema procesando su pago y la compra no pudo ser concretada...',
                 ], 500);
             }
 
@@ -186,12 +192,28 @@ class SaleController extends Controller
     private function call_mercadopago($card_network, $card_token, $email, $total_amount)
     {
         try {
-            //
+            $response = Http::withToken($this->access_token)
+                ->accept('application/json')
+                ->post($this->base_uri . '/v1/payments', [
+                    'payer' => [
+                        'email' => $email,
+                    ],
+                    'binary_mode' => true, //binary_mode es para pedir que la transaccion tenga solo 2 estados, aprobada o rechazada
+                    'transaction_amount' => $total_amount,
+                    'payment_method_id' => $card_network,
+                    'token' => $card_token,
+                    'installments' => 1,
+                    'statement_descriptor' => 'Stallion Marroquinería',
+                ]);
+
+            if ($response->failed() || $response->clientError() || $response->serverError()) {
+                return false;
+            }
+
+            return $response->json();
         } catch (\Throwable $th) {
             return false;
         }
-
-        return true;
     }
 
     private function generate_sales($order_id, $products)

@@ -19,12 +19,24 @@
 		<div class="form-group">
 			<label>Tipo de Producto:</label>
 			<select class="form-control" name="type">
-				<option value="mochilas">Mochilas</option>
+				<option value="mochilas urbanas">Mochilas Urbanas</option>
+				<option value="mochilas escolares">Mochilas Escolares</option>
 				<option value="portafolio">Portafolios</option>
+				<option value="maletines">Maletines</option>
 				<option value="valijas">Valijas</option>
 				<option value="bolsos">Bolsos</option>
+				<option value="carteras">Carteras</option>
+				<option value="bandoleras">Bandoleras</option>
+				<option value="riñoneras">Riñoneras</option>
+				<option value="cartucheras">Cartucheras</option>
 				<option value="porta-notebooks">Porta-Notebooks</option>
 				<option value="productos fabricados">Productos Fabricados</option>
+				<option value="billeteras - hombre">Billeteras - Hombre</option>
+				<option value="billeteras - mujer">Billeteras - Mujer</option>
+				<option value="billeteras - tarjetero">Billeteras - Tarjetero</option>
+				<option value="morrales">Morrales</option>
+				<option value="accesorios">Accesorios</option>
+				<option value="otros">Otros</option>
 			</select>
 			@error('type')
 				<small class="text-danger"> {{$message}} </small>

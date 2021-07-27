@@ -91,7 +91,7 @@ class AdminController extends Controller
 
     public function review_sales()
     {
-        $sales = SaleOrder::with('sales')->paginate(15);
+        $sales = SaleOrder::with('sales')->orderBy('id', 'desc')->paginate(15);
 
         return view('sales', compact('sales'));
     }

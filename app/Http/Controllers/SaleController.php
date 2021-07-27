@@ -153,7 +153,7 @@ class SaleController extends Controller
         }
 
         $sale_order = SaleOrder::create([
-            'date' => now()->format('Y-M-D'),
+            'date' => now()->format('Y-m-d'),
             'payment_method' => $payment_method,
             'total_price' => $total_amount,
             'billing_info' => $info['billing_info'],

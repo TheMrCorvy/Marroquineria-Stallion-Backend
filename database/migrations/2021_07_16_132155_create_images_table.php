@@ -17,7 +17,7 @@ class CreateImagesTable extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->string('img_url');
-            $table->string('img_path');
+            $table->string('img_path')->nullable();
             $table->timestamps();
         });
     }
@@ -29,7 +29,7 @@ class CreateImagesTable extends Migration
      */
     public function down()
     {
-        Schema::table('images', function(BluePrint $table){
+        Schema::table('images', function (BluePrint $table) {
             $table->dropForeign(['product_id']);
             $table->dropColumn('product_id');
         });

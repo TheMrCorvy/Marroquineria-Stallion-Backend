@@ -159,7 +159,9 @@ class ProductController extends Controller
                 $images_db = Image::select('img_url', 'img_path', 'id')->where('product_id', $product_id)->get();
 
                 foreach ($images_db as $image_db) {
-                    Storage::disk('s3')->delete('images/' . $image_db->img_path);
+                    if ($image_db->img_path) {
+                        Storage::disk('s3')->delete('images/' . $image_db->img_path);
+                    }
 
                     $image_db->delete();
                 }

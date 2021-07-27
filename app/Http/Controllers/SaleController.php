@@ -145,6 +145,7 @@ class SaleController extends Controller
                         'api_call_unsuccessful' => 'the api responded with a status different from "approved"'
                     ],
                     'message' => 'Hubo un problema procesando su pago y la compra no pudo ser concretada...',
+                    'response' => $payment
                 ], 500);
             }
 

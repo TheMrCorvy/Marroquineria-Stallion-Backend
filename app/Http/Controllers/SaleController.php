@@ -139,7 +139,7 @@ class SaleController extends Controller
                 $total_amount,
             );
 
-            if (!$payment || $payment['status'] !== 'approved') {
+            if (!$payment['success'] || $payment['response']['status'] !== 'approved') {
                 return response()->json([
                     'errors' => [
                         'api_call_unsuccessful' => 'the api responded with a status different from "approved"'
@@ -208,11 +208,35 @@ class SaleController extends Controller
                     'statement_descriptor' => 'Stallion Marroquinería',
                 ]);
 
-            if ($response->failed() || $response->clientError() || $response->serverError()) {
-                return false;
+            if ($response->failed()) {
+                return [
+                    'success' => false,
+                    'response' => $response->json(),
+                    'status' => 'failed'
+                ];
             }
 
-            return $response->json();
+            if ($response->clientError()) {
+                return [
+                    'success' => false,
+                    'response' => $response->json(),
+                    'status' => 'client error'
+                ];
+            }
+
+            if ($response->serverError()) {
+                return [
+                    'success' => false,
+                    'response' => $response->json(),
+                    'status' => 'server error'
+                ];
+            }
+
+            return [
+                'success' => true,
+                'response' => $response->json(),
+                'status' => 'success'
+            ];
         } catch (\Throwable $th) {
             return false;
         }

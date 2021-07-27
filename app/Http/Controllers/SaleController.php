@@ -248,17 +248,21 @@ class SaleController extends Controller
             foreach ($products as $product) {
                 $db_product = Product::findOrFail($product['id']);
 
-                $db_product->stock = $db_product->stock - $product['amount'];
+                if ($db_product->stock - $product['amount'] >= 0) {
+                    $db_product->stock = $db_product->stock - $product['amount'];
 
-                $db_product->save();
+                    $db_product->save();
 
-                Sale::create([
-                    'sale_order_id' => $order_id,
-                    'title' => $db_product->title,
-                    'product_id' => $product['id'],
-                    'unit_price' => $db_product->price,
-                    'amount' => $product['amount'],
-                ]);
+                    Sale::create([
+                        'sale_order_id' => $order_id,
+                        'title' => $db_product->title,
+                        'product_id' => $product['id'],
+                        'unit_price' => $db_product->price,
+                        'amount' => $product['amount'],
+                    ]);
+                } else {
+                    throw new Exception("Not Enough Stock", 1);
+                }
             }
         } catch (\Throwable $th) {
             return false;

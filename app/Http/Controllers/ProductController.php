@@ -15,7 +15,7 @@ class ProductController extends Controller
 {
     public function get_products()
     {
-        $products = Product::with('images')->paginate(10);
+        $products = Product::with('images')->where('stock', '>=', 1)->paginate(10);
 
         return response()->json([
             'products' => $products,

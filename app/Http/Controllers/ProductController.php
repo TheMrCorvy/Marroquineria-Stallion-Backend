@@ -73,7 +73,15 @@ class ProductController extends Controller
 
     public function get_offers()
     {
-        // 
+        $offers = Product::with('images')
+            ->where('stock', '>=', 1)
+            ->where('discount', '>', 0)
+            ->whereNotNull('discount')
+            ->paginate(5);
+
+        return response()->json([
+            'offers' => $offers,
+        ], 200);
     }
 
     public function create(Request $request)

@@ -88,7 +88,7 @@ class SaleController extends Controller
                 'method' => ['required', 'string', 'min:3', 'max:15', 'in:mercadopago,cash'],
                 'billing_info' => ['required', 'json'],
                 'shipping_info' => ['required', 'json'],
-                'total_price' => ['required', 'integer', 'min:1'],
+                'total_price' => ['required', 'numeric', 'min:100'],
                 'cart_items' => ['required'],
                 'email' => ['required', 'email'],
                 'card_network' => ['required_unless:method,cash', 'string', 'min:1', 'max:190'],
@@ -253,11 +253,19 @@ class SaleController extends Controller
 
                     $db_product->save();
 
+                    $sale_price = 0;
+
+                    if ($db_product->discount) {
+                        $sale_price = ($db_product->discount * $db_product->price) / 100;
+                    } else {
+                        $sale_price = $db_product->price;
+                    }
+
                     Sale::create([
                         'sale_order_id' => $order_id,
                         'title' => $db_product->title,
                         'product_id' => $product['id'],
-                        'unit_price' => $db_product->price,
+                        'unit_price' => $sale_price,
                         'amount' => $product['amount'],
                     ]);
                 } else {

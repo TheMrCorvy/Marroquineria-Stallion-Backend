@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use Mail;
 use App\Mail\NotifyUser;
+use App\Mail\NotifySeller;
 
 use App\Models\User;
 use App\Models\SaleOrder;
@@ -54,7 +55,7 @@ class SaleController extends Controller
             ], 400);
         }
 
-        $user = User::findOrFail(1);
+        $user = User::findOrFail(2);
 
         $user->notify(new AskForFund(
             $info['name'],
@@ -162,7 +163,7 @@ class SaleController extends Controller
 
         $order_finished = $this->generate_sales($sale_order->id, $info['cart_items']);
 
-        if (!$order_finished) {
+        if (!$order_finished[0]) {
             return response()->json([
                 'errors' => [
                     'db_connection_unsuccessful' => 'there was an error trying to reduce the stock of some products, or trying to create the sale order'
@@ -172,6 +173,7 @@ class SaleController extends Controller
         }
 
         Mail::to($info['email'])->send(new NotifyUser($sale_order->id));
+        Mail::to('mercedesdelvalleaguirre@gmail.com')->send(new NotifySeller($order_finished[1]));
 
         return response()->json([
             'message' => 'Su compra fue finalizada exitosamente. Dentro de unos momentos recibirá un email con el código de su compra.'
@@ -244,6 +246,8 @@ class SaleController extends Controller
 
     private function generate_sales($order_id, $products)
     {
+        $sales = [];
+
         try {
             foreach ($products as $product) {
                 $db_product = Product::findOrFail($product['id']);
@@ -256,26 +260,28 @@ class SaleController extends Controller
                     $sale_price = 0;
 
                     if ($db_product->discount) {
-                        $sale_price = ($db_product->discount * $db_product->price) / 100;
+                        $sale_price = $db_product->price - (($db_product->discount * $db_product->price) / 100);
                     } else {
                         $sale_price = $db_product->price;
                     }
 
-                    Sale::create([
+                    $sale_created = Sale::create([
                         'sale_order_id' => $order_id,
                         'title' => $db_product->title,
                         'product_id' => $product['id'],
                         'unit_price' => $sale_price,
                         'amount' => $product['amount'],
                     ]);
+
+                    array_push($sales, $sale_created);
                 } else {
                     throw new Exception("Not Enough Stock", 1);
                 }
             }
         } catch (\Throwable $th) {
-            return false;
+            return [false, false];
         }
 
-        return true;
+        return [true, $sales];
     }
 }

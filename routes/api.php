@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/get-products', 'ProductController@get_products');
+Route::get('/get-products/{type?}', 'ProductController@get_products');
 
 Route::get('/find-product/{product_id}', 'ProductController@find_product');
 

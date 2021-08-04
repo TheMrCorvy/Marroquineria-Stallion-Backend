@@ -13,9 +13,19 @@ use Storage;
 
 class ProductController extends Controller
 {
-    public function get_products()
+    public function get_products($type = null)
     {
-        $products = Product::with('images')->where('stock', '>=', 1)->paginate(10);
+        if ($type) {
+            $products = Product::with('images')
+                ->where('stock', '>=', 1)
+                ->where('type', 'LIKE', "%$type%")
+                ->paginate(10);
+        } else {
+            $products = Product::with('images')
+                ->where('stock', '>=', 1)
+                ->paginate(10);
+        }
+
 
         return response()->json([
             'products' => $products,

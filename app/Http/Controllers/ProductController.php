@@ -87,7 +87,7 @@ class ProductController extends Controller
             ->where('stock', '>=', 1)
             ->where('discount', '>', 0)
             ->whereNotNull('discount')
-            ->paginate(5);
+            ->paginate(2);
 
         return response()->json([
             'offers' => $offers,

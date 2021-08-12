@@ -142,7 +142,45 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($product_id);
 
-        return view('edit-product', compact('product'));
+        $categories = [
+            "accesorios",
+            "accesorios - mujer",
+            "accesorios de viaje",
+            "bandoleras",
+            "barbijos / cubrebocas",
+            "billeteras",
+            "billeteras - hombre",
+            "billeteras - mujer",
+            "billeteras - tarjetero",
+            "billeteras de cuero - hombre",
+            "billeteras de cuero - mujer",
+            "bolsos",
+            "botineros",
+            "botineros",
+            "carteras",
+            "carteras simil cuero",
+            "cartucheras",
+            "maletines",
+            "mochilas",
+            "mochilas escolares",
+            "mochilas porta-notebooks",
+            "mochilas urbanas",
+            "morrales",
+            "paraguas",
+            "paraguas - hombre",
+            "paraguas - mujer",
+            "porta cosméticos",
+            "porta-notebooks",
+            "portafolio",
+            "portafolios",
+            "portafolios porta-notebooks",
+            "portafolios simil cuero",
+            "productos fabricados",
+            "riñoneras",
+            "valijas",
+        ];
+
+        return view('edit-product', compact('product', 'categories'));
     }
 
     public function update(Request $request, $product_id)

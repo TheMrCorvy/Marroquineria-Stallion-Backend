@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // since I can't call env function from here, I'll leave this commented
-        URL::forceScheme('https');
+        // URL::forceScheme('https');
 
         Paginator::useBootstrap();
     }

@@ -86,7 +86,45 @@ class AdminController extends Controller
             ->where('shipping_zones.id', '>', 1)
             ->get();
 
-        return view('dashboard', compact('shipping_zones', 'shipping_methods'));
+        $categories = [
+            "accesorios",
+            "accesorios - mujer",
+            "accesorios de viaje",
+            "bandoleras",
+            "barbijos / cubrebocas",
+            "billeteras",
+            "billeteras - hombre",
+            "billeteras - mujer",
+            "billeteras - tarjetero",
+            "billeteras de cuero - hombre",
+            "billeteras de cuero - mujer",
+            "bolsos",
+            "botineros",
+            "botineros",
+            "carteras",
+            "carteras simil cuero",
+            "cartucheras",
+            "maletines",
+            "mochilas",
+            "mochilas escolares",
+            "mochilas porta-notebooks",
+            "mochilas urbanas",
+            "morrales",
+            "paraguas",
+            "paraguas - hombre",
+            "paraguas - mujer",
+            "porta cosméticos",
+            "porta-notebooks",
+            "portafolio",
+            "portafolios",
+            "portafolios porta-notebooks",
+            "portafolios simil cuero",
+            "productos fabricados",
+            "riñoneras",
+            "valijas",
+        ];
+
+        return view('dashboard', compact('shipping_zones', 'shipping_methods', 'categories'));
     }
 
     public function review_sales()

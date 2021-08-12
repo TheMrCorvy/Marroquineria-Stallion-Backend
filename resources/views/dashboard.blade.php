@@ -10,7 +10,7 @@
 		<div class="card-header">
 			<h3 class="mb-0">Añadir un Producto</h3>
 		</div>
-		<div class="card-body">@include('sections.create-product-form')</div>
+		<div class="card-body">@include('sections.create-product-form', ['categories' => $categories])</div>
 		<div class="card-footer">
 			@include('sections.search-products')
 		</div>

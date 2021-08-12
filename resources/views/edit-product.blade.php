@@ -4,7 +4,7 @@
 		<div class="card-header">
 			<h3 class="mb-0 text-capitalize">Editando: {{$product->title}}</h3>
 		</div>
-		<div class="card-body">@include('sections.edit-product-form', ['product' => $product])</div>
+		<div class="card-body">@include('sections.edit-product-form', ['product' => $product, 'categories' => $categories])</div>
 	</div>
 </div>
 @endsection

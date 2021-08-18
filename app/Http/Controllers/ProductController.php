@@ -29,6 +29,7 @@ class ProductController extends Controller
 
         return response()->json([
             'products' => $products,
+            'endpoint' => $type
         ], 200);
     }
 

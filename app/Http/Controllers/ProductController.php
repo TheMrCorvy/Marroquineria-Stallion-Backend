@@ -24,6 +24,7 @@ class ProductController extends Controller
         } else {
             $products = Product::with('images')
                 ->where('stock', '>=', 1)
+                ->orderBy('id', 'DESC')
                 ->paginate(10);
         }
 

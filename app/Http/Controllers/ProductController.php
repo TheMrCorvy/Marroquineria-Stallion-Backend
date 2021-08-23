@@ -19,6 +19,7 @@ class ProductController extends Controller
             $products = Product::with('images')
                 ->where('stock', '>=', 1)
                 ->where('type', 'LIKE', "%$type%")
+                ->orderBy('id', 'DESC')
                 ->paginate(10);
         } else {
             $products = Product::with('images')
@@ -66,6 +67,7 @@ class ProductController extends Controller
                 ->orWhere('description', 'LIKE', "%$query%")
                 ->orWhere('brand', 'LIKE', "%$query%")
                 ->orWhere('type', 'LIKE', "%$query%")
+                ->orderBy('id', 'DESC')
                 ->get();
         } else {
             $products = Product::with('images')
@@ -73,6 +75,7 @@ class ProductController extends Controller
                 ->orWhere('description', 'LIKE', "%$query%")
                 ->orWhere('brand', 'LIKE', "%$query%")
                 ->orWhere('type', 'LIKE', "%$query%")
+                ->orderBy('id', 'DESC')
                 ->paginate(10);
         }
 
@@ -88,6 +91,8 @@ class ProductController extends Controller
             ->where('stock', '>=', 1)
             ->where('discount', '>', 0)
             ->whereNotNull('discount')
+            ->where('discount', '!=', 0)
+            ->orderBy('id', 'DESC')
             ->paginate(2);
 
         return response()->json([

@@ -341,12 +341,21 @@
 						<div class="col-lg-4">
 							<div class="form-group">
 								<label for="dni_or_cuil" class="form-control-label">DNI o CUIL:</label>
+								@php
+									$dniOrCuil = 0;
+
+									if(is_numeric($billing_info->dni_or_cuil)) {
+										$dniOrCuil = number_format($billing_info->dni_or_cuil, 0, ',', '.');
+									} else {
+										$dniOrCuil = $billing_info->dni_or_cuil;
+									}
+								@endphp
 								<input 
 									class="form-control text-capitalize" 
 									type="text" 
 									disabled 
 									id="dni_or_cuil"
-									value="{{number_format($billing_info->dni_or_cuil, 0, ',', '.')}}"
+									value="{{$dniOrCuil}}"
 								>
 							</div>
 						</div>

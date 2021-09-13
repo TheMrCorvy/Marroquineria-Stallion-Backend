@@ -17,13 +17,13 @@ class ProductController extends Controller
     {
         if ($type) {
             $products = Product::with('images')
-                ->where('stock', '>=', 1)
+                // ->where('stock', '>=', 1)
                 ->where('type', 'LIKE', "%$type%")
                 ->orderBy('id', 'DESC')
                 ->paginate(10);
         } else {
             $products = Product::with('images')
-                ->where('stock', '>=', 1)
+                // ->where('stock', '>=', 1)
                 ->orderBy('id', 'DESC')
                 ->paginate(10);
         }
@@ -89,7 +89,7 @@ class ProductController extends Controller
     public function get_offers()
     {
         $offers = Product::with('images')
-            ->where('stock', '>=', 1)
+            // ->where('stock', '>=', 1)
             ->where('discount', '>', 0)
             ->whereNotNull('discount')
             ->where('discount', '!=', 0)
@@ -107,7 +107,7 @@ class ProductController extends Controller
             'title' =>          ['required', 'string', 'min:2', 'max:190'],
             'description' =>    ['nullable', 'string', 'min:2', 'max:190'],
             'price' =>          ['required', 'integer', 'min:2'],
-            'stock' =>          ['required', 'integer', 'min:1'],
+            'stock' =>          ['required', 'integer', 'min:0'],
             'brand' =>          ['required', 'string', 'min:1', 'max:190'],
             'type' =>           ['required', 'string', 'min:2', 'max:190'],
             'sale' =>           ['nullable', 'integer', 'min:0'],
@@ -194,7 +194,7 @@ class ProductController extends Controller
             'title' =>          ['required', 'string', 'min:2', 'max:190'],
             'description' =>    ['nullable', 'string', 'min:2', 'max:190'],
             'price' =>          ['required', 'integer', 'min:2'],
-            'stock' =>          ['required', 'integer', 'min:1'],
+            'stock' =>          ['required', 'integer', 'min:0'],
             'brand' =>          ['required', 'string', 'min:1', 'max:190'],
             'type' =>           ['required', 'string', 'min:2', 'max:190'],
             'sale' =>           ['nullable', 'integer', 'min:0'],

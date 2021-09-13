@@ -17,13 +17,13 @@ class ProductController extends Controller
     {
         if ($type) {
             $products = Product::with('images')
-                // ->where('stock', '>=', 1)
+                ->where('stock', '>=', 0)
                 ->where('type', 'LIKE', "%$type%")
                 ->orderBy('id', 'DESC')
                 ->paginate(10);
         } else {
             $products = Product::with('images')
-                // ->where('stock', '>=', 1)
+                ->where('stock', '>=', 0)
                 ->orderBy('id', 'DESC')
                 ->paginate(10);
         }
@@ -89,7 +89,7 @@ class ProductController extends Controller
     public function get_offers()
     {
         $offers = Product::with('images')
-            // ->where('stock', '>=', 1)
+            ->where('stock', '>=', 0)
             ->where('discount', '>', 0)
             ->whereNotNull('discount')
             ->where('discount', '!=', 0)
